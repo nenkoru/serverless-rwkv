@@ -2,6 +2,9 @@ FROM python:3.9.16-slim-buster as base
 
 FROM base as model_downloading
 
+ARG MODEL_URL
+ARG TOKENIZER_URL
+
 ENV MODEL_URL $MODEL_URL
 ENV TOKENIZER_URL $TOKENIZER_URL
 
