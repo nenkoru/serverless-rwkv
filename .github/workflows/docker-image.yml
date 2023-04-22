@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-defaults:
- run:
-  working-directory: app
-
 jobs:
 
   build:
@@ -30,10 +26,12 @@ jobs:
         remove-dotnet: 'true'
 
     - uses: actions/checkout@v3
+      with:
+        path: /app
 
     - name: Move docker data-root to local pwd
       run: cat /etc/docker/daemon.json && mkdir /home/runner/work/runpod-rwkv/runpod-rwkv/docker && sudo cp daemon.json /etc/docker/daemon.json && sudo systemctl restart docker
 
     - name: Build image
-      run: docker info -f '{{ .DockerRootDir }}' && chmod +x ./build.sh && ./build.sh
+      run: cd /app && docker info -f '{{ .DockerRootDir }}' && chmod +x ./build.sh && ./build.sh
 
