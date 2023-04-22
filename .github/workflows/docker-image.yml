@@ -26,6 +26,7 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-dotnet: 'true'
+        remove-docker-images: 'true'
 
     - uses: actions/checkout@v3
       with:
