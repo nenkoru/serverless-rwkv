@@ -1,2 +1,2 @@
-docker build -t runpod-rwkv:latest .
+docker build -t ${BUILD_TAG} .
 

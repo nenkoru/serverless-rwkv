@@ -11,8 +11,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    environment: rwkv-links
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Download model & tokenizer
+      run: chmod +x ./download_model.sh && ./download_model.sh
+    - name: Build image
       run: chmod +x ./build.sh && ./build.sh
+
