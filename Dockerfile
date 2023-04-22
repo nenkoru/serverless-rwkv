@@ -10,17 +10,21 @@ ARG TOKENIZER_URL=https://huggingface.co/spaces/BlinkDL/Raven-RWKV-7B/resolve/ma
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
+RUN apt-get update && apt-get install -y wget
+
 WORKDIR /runpod
 
 RUN pip3 install poetry
 
-COPY --chown=$USER_UID:$USER_GID ./poetry.lock ./pyproject.toml /runpod
-RUN poetry install --no-interaction --no-ansi --only main
+COPY --chown=$USER_UID:$USER_GID ./poetry.lock ./pyproject.toml /runpod/
+RUN poetry config installer.max-workers 10
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-interaction --no-ansi --only main -vvv
 
 RUN wget $MODEL_URL -O model.pth
 RUN wget $TOKENIZER_URL -O tokenizer.json
 
-COPY --chown=$USER_UID:$USER_GID ./serverless_handler.py /runpod
+COPY --chown=$USER_UID:$USER_GID ./serverless_handler.py /runpod/
 
 ENV STRATEGY $STRATEGY
 
