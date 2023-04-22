@@ -17,8 +17,8 @@ RUN poetry config installer.max-workers 10
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi --only main -vvv
 
-COPY --chown=$USER_UID:$USER_GID ./model.pth /runpod/
 COPY --chown=$USER_UID:$USER_GID ./tokenizer.json /runpod/
+COPY --chown=$USER_UID:$USER_GID ./model.pth /runpod/
 
 COPY --chown=$USER_UID:$USER_GID ./serverless_handler.py /runpod/
 
