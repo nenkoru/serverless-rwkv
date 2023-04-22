@@ -8,7 +8,7 @@ ARG TOKENIZER_URL $TOKENIZER_URL
 ENV MODEL_URL $MODEL_URL
 ENV TOKENIZER_URL $TOKENIZER_URL
 
-RUN apt-get update && apt-get install wget
+RUN apt-get update && apt-get install -y wget
 
 COPY ./download_model.sh .
 RUN ./download_model.sh
