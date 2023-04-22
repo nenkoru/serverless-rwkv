@@ -8,51 +8,20 @@ on:
 
 jobs:
 
-  download_model:
+  build:
     env:
       MODEL_URL: ${{ vars.MODEL_URL }}
       TOKENIZER_URL: ${{ vars.TOKENIZER_URL }}
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Download model & tokenizer
-      run: chmod +x ./download_model.sh && ./download_model.sh
-
-    - uses: actions/upload-artifact@master
-      with:
-        name: rwkv_model
-        path: model.pth
-
-    - uses: actions/upload-artifact@master
-      with:
-        name: rwkv_tokenizer
-        path: tokenizer.json
-
-
-
-  build:
-    needs: download_model
-
-    env:
       BUILD_TAG: ${{ vars.BUILD_TAG }}
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/download-artifact@master
-      with:
-        name: rwkv_model
-        path: model.pth
-
-    - uses: actions/download-artifact@master
-      with:
-        name: rwkv_tokenizer
-        path: tokenizer.json
-
-
     - uses: actions/checkout@v3
+
+    - name: Download model & tokenizer
+      run: chmod +x ./download_model.sh && ./download_model.sh
+
     - name: Build image
       run: chmod +x ./build.sh && ./build.sh
 
