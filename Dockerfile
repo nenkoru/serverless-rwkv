@@ -8,7 +8,7 @@ ARG TOKENIZER_URL $TOKENIZER_URL
 RUN apt-get update && apt-get install -y wget
 
 COPY ./download_model.sh .
-RUN chmod +x ./download_model.sh && ./download_model.sh
+RUN env && chmod +x ./download_model.sh && ./download_model.sh
 
 FROM base as production_build
 
