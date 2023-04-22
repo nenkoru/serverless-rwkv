@@ -28,5 +28,5 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Build image
-      run: chmod +x ./build.sh && ./build.sh
+      run: docker info -f '{{ .DockerRootDir }}' && chmod +x ./build.sh && ./build.sh
 
