@@ -21,6 +21,8 @@ jobs:
       run: chmod +x ./download_model.sh && ./download_model.sh
 
   build:
+    needs: download_model
+
     env:
       BUILD_TAG: ${{ vars.BUILD_TAG }}
 
