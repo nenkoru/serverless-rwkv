@@ -16,7 +16,7 @@ ARG USERNAME=runpod-worker
 ARG USER_UID=1001
 ARG USER_GID=1001
 
-ENV STRATEGY=cuda fp16
+ENV STRATEGY="cuda fp16"
 
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
