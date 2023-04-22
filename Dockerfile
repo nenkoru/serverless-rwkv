@@ -28,7 +28,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi --only main -vvv
 
 COPY ./download_model.sh .
-RUN chmod +x ./download_model.sh && ~/download_model.sh
+RUN chmod +x ./download_model.sh && ./download_model.sh
 
 COPY --chown=$USER_UID:$USER_GID ./serverless_handler.py ./
 RUN chown -R $USER_UID:$USER_GID ./
