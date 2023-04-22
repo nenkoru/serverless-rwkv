@@ -20,6 +20,18 @@ jobs:
     - name: Download model & tokenizer
       run: chmod +x ./download_model.sh && ./download_model.sh
 
+    - uses: actions/upload-artifact@master
+      with:
+        name: rwkv_model
+        path: model.pth
+
+    - uses: actions/upload-artifact@master
+      with:
+        name: rwkv_tokenizer
+        path: tokenizer.json
+
+
+
   build:
     needs: download_model
 
@@ -29,6 +41,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/download-artifact@master
+      with:
+        name: rwkv_model
+        path: model.pth
+
+    - uses: actions/download-artifact@master
+      with:
+        name: rwkv_tokenizer
+        path: tokenizer.json
+
+
     - uses: actions/checkout@v3
     - name: Build image
       run: chmod +x ./build.sh && ./build.sh
