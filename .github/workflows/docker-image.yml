@@ -8,13 +8,26 @@ on:
 
 jobs:
 
-  build:
+  download_model:
+    env:
+      MODEL_URL: ${{ vars.MODEL_URL }}
+      TOKENIZER_URL: ${{ vars.TOKENIZER_URL }}
 
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
     - name: Download model & tokenizer
       run: chmod +x ./download_model.sh && ./download_model.sh
+
+  build:
+    env:
+      BUILD_TAG: ${{ vars.BUILD_TAG }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
     - name: Build image
       run: chmod +x ./build.sh && ./build.sh
 
