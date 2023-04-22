@@ -1,4 +1,19 @@
-FROM python:3.9.16-slim-buster
+FROM python:3.9.16-slim-buster as base
+
+FROM base as model_downloading
+
+ARG MODEL_URL $MODEL_URL
+ARG TOKENIZER_URL $TOKENIZER_URL
+
+ENV MODEL_URL $MODEL_URL
+ENV TOKENIZER_URL $TOKENIZER_URL
+
+RUN apt-get update && apt-get install wget
+
+COPY ./download_model.sh .
+RUN ./download_model.sh
+
+FROM base as production_build
 
 ARG USERNAME=runpod-worker
 ARG USER_UID=1001
@@ -17,8 +32,8 @@ RUN poetry config installer.max-workers 10
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi --only main -vvv
 
-COPY --chown=$USER_UID:$USER_GID ./tokenizer.json /runpod/
-COPY --chown=$USER_UID:$USER_GID ./model.pth /runpod/
+COPY --from=model_downloading --chown=$USER_UID:$USER_GID ./tokenizer.json /runpod/
+COPY --from=model_downloading --chown=$USER_UID:$USER_GID ./model.pth /runpod/
 
 COPY --chown=$USER_UID:$USER_GID ./serverless_handler.py /runpod/
 
