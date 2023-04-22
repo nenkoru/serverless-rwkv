@@ -1,3 +1,5 @@
 { 
-   "data-root": "/home/runner/work/runpod-rwkv/runpod-rwkv/docker"
+   "data-root": "/home/runner/work/runpod-rwkv/runpod-rwkv/docker",
+   "exec-opts": ["native.cgroupdriver=cgroupfs"],
+   "cgroup-parent": "/actions_job" 
 }
