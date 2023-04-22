@@ -17,10 +17,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        root-reserve-mb: 512
+        swap-size-mb: 1024
+        remove-dotnet: 'true'
+
     - uses: actions/checkout@v3
 
     - name: Download model & tokenizer
-      run: chmod +x ./download_model.sh && ./download_model.sh
+      run: df -h && chmod +x ./download_model.sh && ./download_model.sh
 
     - name: Build image
       run: chmod +x ./build.sh && ./build.sh
