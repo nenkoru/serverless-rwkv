@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "runpod-rwkv"
+version = "0.1.0"
+description = "A runpod wrapper around rwkv"
+authors = ["Chernenko Ruslan <ractyfree@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "runpod_rwkv"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+torch = "^2.0.0"
+ninja = "^1.11.1"
+tokenizers = "^0.13.3"
+rwkv = "^0.7.3"
+pynvml = "^11.5.0"
+huggingface-hub = "^0.13.4"
+gradio = "^3.27.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
