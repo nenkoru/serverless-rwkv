@@ -5,9 +5,6 @@ FROM base as model_downloading
 ARG MODEL_URL $MODEL_URL
 ARG TOKENIZER_URL $TOKENIZER_URL
 
-ENV MODEL_URL $MODEL_URL
-ENV TOKENIZER_URL $TOKENIZER_URL
-
 RUN apt-get update && apt-get install -y wget
 
 COPY ./download_model.sh .
@@ -18,7 +15,8 @@ FROM base as production_build
 ARG USERNAME=runpod-worker
 ARG USER_UID=1001
 ARG USER_GID=1001
-ARG STRATEGY=cuda fp16
+
+ENV STRATEGY=cuda fp16
 
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
