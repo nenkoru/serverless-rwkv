@@ -37,3 +37,8 @@ jobs:
     - name: Build image
       run: cd ./repo && docker info -f '{{ .DockerRootDir }}' && chmod +x ./build.sh && ./build.sh
 
+    - name: Push image to DockerHub
+      run: |
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESSTOKEN }} &&
+        docker push ractyfree/runpod-rwkv:latest
+
