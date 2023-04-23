@@ -1,0 +1,39 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    environment: production
+    env:
+      MODEL_URL: ${{ vars.MODEL_URL }}
+      TOKENIZER_URL: ${{ vars.TOKENIZER_URL }}
+      BUILD_TAG: ${{ vars.BUILD_TAG }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        root-reserve-mb: 512
+        swap-size-mb: 1024
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-dotnet: 'true'
+        remove-docker-images: 'true'
+
+    - uses: actions/checkout@v3
+      with:
+        path: './repo'
+
+    - name: Move docker data-root to local folder
+      run: cat /etc/docker/daemon.json && mkdir /home/runner/work/runpod-rwkv/runpod-rwkv/docker && sudo cp ./repo/daemon.json /etc/docker/daemon.json && sudo systemctl restart docker
+
+    - name: Build image
+      run: cd ./repo && docker info -f '{{ .DockerRootDir }}' && chmod +x ./build.sh && ./build.sh
+

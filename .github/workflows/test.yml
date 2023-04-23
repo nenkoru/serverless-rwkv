@@ -1,14 +1,13 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
 
   build:
+    environment: test
     env:
       MODEL_URL: ${{ vars.MODEL_URL }}
       TOKENIZER_URL: ${{ vars.TOKENIZER_URL }}
