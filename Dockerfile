@@ -33,8 +33,6 @@ RUN chmod +x ./download_model.sh && ./download_model.sh
 COPY --chown=$USER_UID:$USER_GID ./serverless_handler.py ./
 RUN chown -R $USER_UID:$USER_GID ./
 
-ENV STRATEGY $STRATEGY
-
 USER $USERNAME
 
 ENTRYPOINT ["python", "serverless_handler.py"]
