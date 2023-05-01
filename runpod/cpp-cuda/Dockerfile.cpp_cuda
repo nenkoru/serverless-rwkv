@@ -1,0 +1,30 @@
+FROM ractyfree/rwkv-cuda-cpp:pybind-latest as build
+
+RUN apt-get update && apt-get install -y wget
+
+ARG MODEL_URL
+
+WORKDIR /build
+
+RUN wget $MODEL_URL -O model.bin -q
+
+FROM ractyfree/rwkv-cuda-cpp:pybind-latest
+
+ARG USERNAME=runpod-worker
+ARG USER_UID=1001
+ARG USER_GID=1001
+
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+
+WORKDIR /runpod
+
+COPY --chown=$USER_UID:$USER_GID ./serverless_handler.py /runpod
+COPY --from=build /build/model.bin /runpod
+RUN chown -R $USER_UID:$USER_GID /runpod
+
+USER $USERNAME
+
+ENTRYPOINT ["python", "serverless_handler.py"]
+
