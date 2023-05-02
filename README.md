@@ -23,4 +23,5 @@ In runpod.io you have to create an 'API Template' and in 'Container image' field
 And then in 'My APIs' create a new api with selecting a newly created template to be used as well as GPU suitable for the size of a model that you are willing to deploy.
 
 ## Roadmap:
-- Integration with beam.cloud, banana.dev, replicate, pipeline.ai, 
+- Integration with beam.cloud, banana.dev, replicate, pipeline.ai
+- Automatic rebuilds on push to Dockerhub with all the base models 1b5, 3b, 7b, 14b
