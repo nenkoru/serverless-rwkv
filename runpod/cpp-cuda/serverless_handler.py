@@ -57,7 +57,18 @@ def handler(event):
             input_tokens=input_tokens, 
             tokens_to_generate=req_body.tokens
             )
-    return "".join(TOKENIZER.decode(token) for token in generator_tokens)
+
+    reverse_sequence_window = len(req_body.stop_sequence) * -1 if req_body.stop_sequence else 0
+    output_str = req_body.body if req_body.with_body else ""
+
+    for token in generator_tokens:
+        decoded_token = TOKENIZER.decode(token)
+        
+        output_str += decoded_token
+        if req_body.stop_sequence && output_str[reverse_sequence_window:] == req_body.stop_sequence:
+            break
+
+    return output_str
 
 runpod.serverless.start({
     "handler": handler
