@@ -65,7 +65,7 @@ def handler(event):
         decoded_token = TOKENIZER.decode(token)
         
         output_str += decoded_token
-        if req_body.stop_sequence && output_str[reverse_sequence_window:] == req_body.stop_sequence:
+        if req_body.stop_sequence and output_str[reverse_sequence_window:] == req_body.stop_sequence:
             break
 
     return output_str
