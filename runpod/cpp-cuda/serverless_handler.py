@@ -4,6 +4,7 @@ import os
 import runpod
 
 from typing import List, Callable
+from dataclasses import dataclass
 
 import binding
 
@@ -13,17 +14,24 @@ TOKENIZER_MERGES_PATH = os.environ.get("TOKENIZER_MERGES_PATH", "merges.txt")
 
 print(f"Loading {MODEL_PATH}...", end='')
 t1 = time.time()
-model = binding.ModelWrapper(model_path=MODEL_PATH)
+MODEL = binding.ModelWrapper(model_path=MODEL_PATH)
 print(f" Loaded in {time.time() - t1}!")
 
 print(f"Loading tokenizer...", end='')
 t1 = time.time()
-tokenizer = binding.TokenizerWrapper(
+TOKENIZER = binding.TokenizerWrapper(
         vocab_path=TOKENIZER_VOCAB_PATH,
         merges_path=TOKENIZER_MERGES_PATH,
         )
 print(f" Loaded in {time.time() - t1}!")
 
+
+@dataclass
+class RequestBodyMessage:
+    body: str
+    tokens: int
+    with_body: bool = False
+    stop_sequence: str = None
 
 def generate_tokens(
     *, 
@@ -42,8 +50,14 @@ def generate_tokens(
  
 
 def handler(event):
-    print(event)
-    return "Hello World"
+    req_body = RequestBodyMessage(**event['input'])
+    input_tokens = TOKENIZER.encode(req_body.body)
+    generator_tokens = generate_tokens(
+            model=MODEL, 
+            input_tokens=input_tokens, 
+            tokens_to_generate=req_body.tokens
+            )
+    return "".join(TOKENIZER.decode(token) for token in generator_tokens)
 
 runpod.serverless.start({
     "handler": handler

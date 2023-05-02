@@ -11,7 +11,7 @@ RUN wget $MODEL_URL -O model.bin -q
 FROM ractyfree/rwkv-cuda-cpp:pybind-latest
 
 RUN apt-get update && apt-get install -y python3 pip
-RUN python3 -m pip install runpod==0.9.3
+RUN python3 -m pip install runpod==0.9.3 numpy
 
 ARG USERNAME=runpod-worker
 ARG USER_UID=1001
