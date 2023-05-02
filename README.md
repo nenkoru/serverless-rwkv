@@ -24,7 +24,7 @@ And then in 'My APIs' create a new api with selecting a newly created template t
 
 ## Contribution
 All the contributions are welcome. You would like to add a Google-like documentation into serverless_handler.py - go ahead and push a PR.
-You have a doubt that there is an inefficiency in a way Dockerfile is build - you know what to do.
+You have a doubt that there is an inefficiency in a way Dockerfile is built - you know what to do.
 `This is the way.`
 
 ## Roadmap:
