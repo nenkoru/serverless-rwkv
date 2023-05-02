@@ -4,7 +4,7 @@ Having this you can go further and deploy any different kinds of a code around R
 ## Motivation
 I understand how hard it could be to host a huge 3090 or 4090 to run LLMs, not considering the cost of a GPU itself. I really wish everything to be mobile as possible. I do have a powerful laptop that could handle RWKV, but with the pace that I would like to use the model it would drain the battery real fast. So after that I started to think what could be done to run a model somewhere in cloud, but as cheap as possible. Renting a machine is GPU is quite costly. Very costly. And I won't be using all the horsepower all the second that I am paying for. So afterwards a serverless computation goes into a play. Deploy effortlessly, run efficiently. Now I can pay exactly for what I use.
 
-## Building image
+## Building an image
 Deploy to a selected provider of yours by navigating to it and finding a Dockerfile for it.
 Typical build and push to Dockerhub for Dockerfile:
 ```bash
@@ -21,6 +21,11 @@ Note: I strongly recommend to opt for cpp-cuda version, as long as it's much mor
 ## Deploying to a provider(Runpod)
 In runpod.io you have to create an 'API Template' and in 'Container image' field you have to put a name like this:`ractyfree/runpod-rwkv:cpp-cuda-v11-7b`
 And then in 'My APIs' create a new api with selecting a newly created template to be used as well as GPU suitable for the size of a model that you are willing to deploy.
+
+## Useful links:
+- [Dockerhub repository](https://hub.docker.com/repository/docker/ractyfree/runpod-rwkv/general) containing built images by me.
+- [Huggingface repository](https://huggingface.co/nenkoru/rwkv-cuda-cpp/tree/main) containing converted RWKV models using [rwkv-cpp-cuda](https://github.com/harrisonvanderbyl/rwkv-cpp-cuda) converter
+- [BlinkDL's original RWKV model](https://github.com/BlinkDL/RWKV-LM) implementation 
 
 ## Contribution
 All the contributions are welcome. You would like to add a Google-like documentation into serverless_handler.py - go ahead and push a PR.
