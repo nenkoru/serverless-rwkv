@@ -22,6 +22,11 @@ Note: I strongly recommend to opt for cpp-cuda version, as long as it's much mor
 In runpod.io you have to create an 'API Template' and in 'Container image' field you have to put a name like this:`ractyfree/runpod-rwkv:cpp-cuda-v11-7b`
 And then in 'My APIs' create a new api with selecting a newly created template to be used as well as GPU suitable for the size of a model that you are willing to deploy.
 
+## Contribution
+All the contributions are welcome. You would like to add a Google-like documentation into serverless_handler.py - go ahead and push a PR.
+You have a doubt that there is an inefficiency in a way Dockerfile is build - you know what to do.
+`This is the way.`
+
 ## Roadmap:
 - Integration with beam.cloud, banana.dev, replicate, pipeline.ai
 - Automatic rebuilds on push to Dockerhub with all the base models 1b5, 3b, 7b, 14b
