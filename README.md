@@ -21,3 +21,6 @@ Note: I strongly recommend to opt for cpp-cuda version, as long as it's much mor
 ## Deploying to a provider(Runpod)
 In runpod.io you have to create an 'API Template' and in 'Container image' field you have to put a name like this:`ractyfree/runpod-rwkv:cpp-cuda-v11-7b`
 And then in 'My APIs' create a new api with selecting a newly created template to be used as well as GPU suitable for the size of a model that you are willing to deploy.
+
+## Roadmap:
+- Integration with beam.cloud, banana.dev, replicate, pipeline.ai, 
